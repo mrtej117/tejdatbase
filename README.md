@@ -1,149 +1,101 @@
-# AI Travel Assistant: Database Architecture Documentation
+# AI Travel Assistant
 
-## 1. Introduction
-Welcome to the official database architecture documentation for the **AI Travel Assistant**. This repository contains the complete specification, design, and implementation guide for the persistence and memory layer of the application. The system leverages a modern stack consisting of PostgreSQL (relational data), pgvector (vector embeddings), and Redis (caching and short-term memory).
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Database](https://img.shields.io/badge/database-PostgreSQL-336791.svg)
+![AI](https://img.shields.io/badge/AI-OpenAI%20%7C%20pgvector-00A67E.svg)
 
-## 2. Purpose
-The purpose of this documentation suite is to provide a single source of truth for the database engineering team. It ensures that all data models, memory systems, performance tuning, and deployment strategies are standardized, highly available, and scalable from local development to production.
+## Project Overview
+The **AI Travel Assistant** is an intelligent, context-aware digital travel agent. Unlike standard chatbots that suffer from amnesia, this system utilizes a cutting-edge **Memory System** backed by PostgreSQL, `pgvector`, and Redis. It remembers your dietary restrictions from two years ago, recalls your budget from five minutes ago, and dynamically generates personalized travel itineraries.
 
-## 3. Problem Statement
-AI applications require complex memory management to maintain conversational context while persisting long-term user preferences and relational domain data (like flights, hotels, and itineraries). A standard relational database is insufficient for semantic search, and an isolated vector database lacks transactional integrity. The challenge is to design a unified, performant hybrid database architecture that seamlessly handles relational queries, fast in-memory key-value operations, and high-dimensional vector similarity searches.
+## Features
+- **Long-Term Memory:** Uses semantic vector embeddings (`pgvector`) to permanently remember user preferences.
+- **Short-Term Memory:** Uses in-memory caching (Redis) to maintain lightning-fast conversational context.
+- **Retrieval-Augmented Generation (RAG):** Eliminates AI hallucinations by grounding every LLM response in rigid facts from the database.
+- **Serverless Infrastructure:** Built for infinite scale using Neon (PostgreSQL) and Upstash (Redis).
 
-## 4. Internal Working
-The database layer functions as a tripartite system:
-- **PostgreSQL (Neon Cloud)**: Serves as the primary source of truth for all structured transactional data (users, bookings, itineraries).
-- **pgvector (PostgreSQL Extension)**: Co-located with the primary relational data, handling embedding storage and semantic similarity search for Long-Term Memory (LTM).
-- **Redis (Upstash/Docker)**: Operates as an ultra-fast, in-memory datastore for Short-Term Memory (STM), rate limiting, and session caching.
+## Technology Stack
+- **Database:** PostgreSQL (Neon Serverless)
+- **Vector Engine:** pgvector
+- **Cache/Session State:** Redis (Upstash)
+- **Backend:** Python (FastAPI)
+- **AI Models:** OpenAI GPT-4o & text-embedding-3
+- **Local Dev:** Docker & Docker Compose
 
-## 5. Architecture
-Below is the high-level Database Architecture illustrating the interaction between the persistence layers.
-
+## Architecture Diagram
 ```mermaid
-flowchart TD
-    subgraph App Layer
-        MA[Memory Agent]
-        API[Backend API]
-    end
-
-    subgraph Database Layer
-        direction TB
-        subgraph PostgreSQL Server
-            PG[(PostgreSQL\nRelational Data)]
-            PGV[(pgvector\nEmbeddings / LTM)]
-        end
-        
-        subgraph Redis Server
-            REDIS[(Redis\nCache / STM)]
-        end
-    end
-
-    API -->|Reads/Writes Itineraries| PG
-    MA -->|Context & Semantic Search| PGV
-    MA -->|Session State| REDIS
-    API -->|Rate Limiting| REDIS
+flowchart LR
+    User([User]) --> API[Backend API]
+    API --> Redis[(Redis\nShort-Term Memory)]
+    API --> Embed[Embedding Model]
+    API --> LLM[Chat LLM]
+    
+    API -.-> Agent[Memory Agent]
+    Agent --> PGV[(pgvector\nLong-Term Memory)]
+    Agent --> PG[(PostgreSQL\nRelational Facts)]
 ```
+*(For the complete, detailed data flow, see [22 - Master Architecture](docs/22_ARCHITECTURE.md))*
 
-## 6. Data Flow
-1. **User Interaction**: User sends a prompt via the frontend.
-2. **Short-Term Memory Lookup**: The Memory Agent queries Redis for immediate conversation context.
-3. **Long-Term Memory Retrieval**: The prompt is embedded and queried against `pgvector` for past preferences and semantic matches.
-4. **Relational Querying**: The Backend API queries PostgreSQL for concrete facts (e.g., booked flights).
-5. **Persistence**: New conversational facts are embedded and saved to `pgvector`. Session updates are saved to Redis.
+## Getting Started
+To spin up the local database infrastructure and begin development, ensure you have Docker installed and run:
 
-## 7. Diagrams (Mermaid)
-*(Note: Each detailed document in this suite contains specific Mermaid diagrams pertaining to its topic, including ER diagrams, deployment topologies, and internal flowcharts).*
-
-## 8. Best Practices
-- **Naming Conventions**: Strictly enforce `snake_case` for all databases, schemas, tables, columns, and constraints.
-- **Single Source of Truth**: Keep embeddings and metadata in the same PostgreSQL database to guarantee ACID compliance.
-- **Connection Pooling**: Always use a connection pooler (like PgBouncer via Neon) to prevent connection exhaustion.
-- **Idempotency**: Ensure all database migration scripts are idempotent.
-
-## 9. Common Mistakes
-- Relying on Redis for persistent, critical data without a backup strategy.
-- Forgetting to create HNSW or IVFFlat indexes on pgvector columns, leading to full table scans.
-- Querying unindexed relational columns in large tables (e.g., filtering logs by timestamp without a B-tree index).
-- Using uppercase characters in PostgreSQL identifiers, forcing the use of double quotes everywhere.
-
-## 10. Production Recommendations
-- Deploy PostgreSQL on **Neon** for serverless autoscaling and branching capabilities.
-- Deploy Redis on **Upstash** or a managed cloud provider for high availability.
-- Implement strict Role-Based Access Control (RBAC) at the database level.
-- Monitor `pg_stat_statements` for query performance continuously.
-
-## 11. Step-by-Step Implementation
-The implementation of the database layer is broken down into the following ordered phases:
-1. Local Development Setup (Docker)
-2. Schema Migration & Baseline (PostgreSQL)
-3. Embedding Configuration (pgvector)
-4. Memory Agent Integration (Redis + pgvector)
-5. Cloud Deployment (Neon + Upstash)
-6. Observability & Monitoring Setup
-
-## 12. Document Index
-Below is the cross-linked index of the documentation suite. As new documents are generated, this index is updated.
-
-- [01 - Project Overview](docs/01_Project_Overview.md)
-- [02 - Database Architecture](docs/02_Database_Architecture.md)
-- [03 - PostgreSQL Architecture](docs/03_PostgreSQL.md)
-- [04 - pgvector: Semantic Memory](docs/04_pgvector.md)
-- [05 - Neon Serverless PostgreSQL](docs/05_Neon_PostgreSQL.md)
-- [06 - Redis: High-Performance Memory](docs/06_Redis.md)
-- [07 - Docker Database Infrastructure](docs/07_Docker_Database.md)
-- [08 - Database Schema](docs/08_Database_Schema.md)
-- [09 - Entity Relationship Diagram](docs/09_ER_Diagram.md)
-- [10 - SQL Guide](docs/10_SQL_Guide.md)
-- [11 - Embeddings](docs/11_Embeddings.md)
-- [12 - Memory System](docs/12_Memory_System.md)
-- [13 - Memory Agent](docs/13_Memory_Agent.md)
-- [14 - Retrieval Pipeline](docs/14_Retrieval_Pipeline.md)
-- [15 - RAG Pipeline](docs/15_RAG_Pipeline.md)
-- [16 - Deployment](docs/16_Deployment.md)
-- [17 - Backup and Recovery](docs/17_Backup_and_Recovery.md)
-- [18 - Performance Optimization](docs/18_Performance_Optimization.md)
-- [19 - Monitoring](docs/19_Monitoring.md)
-- *20_Development_Setup.md (Pending)*
-- *21_Terminal_Commands.md (Pending)*
-
-## 13. SQL Examples
-```sql
--- Example: Standard table creation adhering to naming conventions
-CREATE TABLE user_profiles (
-    user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    email VARCHAR(255) UNIQUE NOT NULL,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-## 14. Terminal Commands
 ```bash
-# Start local database stack
+git clone https://github.com/mrtej117/Sahayatri.git
+cd Sahayatri
+cp .env.example .env
 docker-compose up -d
+```
+For a comprehensive setup guide, read [20 - Development Setup](docs/20_Development_Setup.md).
 
-# View database logs
-docker-compose logs -f postgres
+## Documentation Index
+This repository contains a massive, production-grade documentation suite designed to take developers from beginner concepts to advanced database engineering. 
 
-# Access Redis CLI
-docker exec -it ai-travel-redis redis-cli
+| # | Topic | Description |
+|---|---|---|
+| **01** | [Project Overview](docs/01_Project_Overview.md) | High-level goals and the AI amnesia problem. |
+| **02** | [Database Architecture](docs/02_Database_Architecture.md) | Introduction to the Redis + Postgres hybrid design. |
+| **03** | [PostgreSQL Architecture](docs/03_PostgreSQL.md) | Deep dive into relational database concepts. |
+| **04** | [pgvector: Semantic Memory](docs/04_pgvector.md) | How vector databases understand meaning. |
+| **05** | [Neon PostgreSQL](docs/05_Neon_PostgreSQL.md) | Serverless compute and storage separation. |
+| **06** | [Redis](docs/06_Redis.md) | Utilizing RAM for transient short-term memory. |
+| **07** | [Docker Database Infrastructure](docs/07_Docker_Database.md) | Containerizing the database for local dev. |
+| **08** | [Database Schema](docs/08_Database_Schema.md) | Table structures, JSONB, and UUIDs. |
+| **09** | [Entity Relationship Diagram](docs/09_ER_Diagram.md) | Visual mapping of database table relationships. |
+| **10** | [SQL Guide](docs/10_SQL_Guide.md) | Crucial queries for building and querying the DB. |
+| **11** | [Embeddings](docs/11_Embeddings.md) | Mathematical representation of language. |
+| **12** | [Memory System](docs/12_Memory_System.md) | Episodic vs Semantic memory lifecycles. |
+| **13** | [Memory Agent](docs/13_Memory_Agent.md) | The background worker that consolidates memories. |
+| **14** | [Retrieval Pipeline](docs/14_Retrieval_Pipeline.md) | Fetching vectors and relational data. |
+| **15** | [RAG Pipeline](docs/15_RAG_Pipeline.md) | End-to-End Retrieval-Augmented Generation flow. |
+| **16** | [Deployment](docs/16_Deployment.md) | Moving from local Docker to Neon and Upstash. |
+| **17** | [Backup and Recovery](docs/17_Backup_and_Recovery.md) | Point-in-time recovery and disaster protocols. |
+| **18** | [Performance Optimization](docs/18_Performance_Optimization.md) | HNSW indexing, B-Trees, and EXPLAIN ANALYZE. |
+| **19** | [Monitoring](docs/19_Monitoring.md) | Datadog, pg_stat_statements, and alerts. |
+| **20** | [Development Setup](docs/20_Development_Setup.md) | Step-by-step guide to installing the project. |
+| **21** | [Terminal Commands](docs/21_Terminal_Commands.md) | Cheat sheet for Git, Docker, and PostgreSQL. |
+| **22** | [Master Architecture](docs/22_ARCHITECTURE.md) | The definitive end-to-end blueprint. |
+| **23** | [Project Folder Structure](docs/23_Project_Folder_Structure.md) | Codebase navigation and MVC logic. |
+| **24** | [Technology Decisions](docs/24_Technology_Decisions.md) | Why we chose Postgres over MongoDB, Neon over RDS, etc. |
+
+## Folder Structure
+```text
+Sahayatri/
+├── docs/                 # Extensive Architecture Documentation
+├── backend/              # FastAPI Application (API, DB Models, Agent)
+├── frontend/             # User Interface (React/Next.js)
+├── docker-compose.yml    # Local Infrastructure Orchestration
+└── README.md             # You are here
 ```
 
-## 15. Deployment Considerations
-- Use environment variables for all database connection strings.
-- Separate development, staging, and production databases entirely.
-- Utilize Neon's database branching for zero-copy staging environments.
+## Contributing
+We welcome contributions! Please read our [Contributing Guide](CONTRIBUTING.md) to understand our Git branching strategy, pull request rules, and coding standards.
 
-## 16. Security Considerations
-- Encrypt data at rest and in transit (SSL/TLS enforced).
-- Never expose database ports directly to the public internet (use VPCs or IP whitelisting).
-- Use least-privilege principles for application database users (e.g., no schema alteration rights for the runtime API).
+## Roadmap
+- [x] Design Database Architecture
+- [x] Implement pgvector for Long-Term Memory
+- [x] Implement Redis for Short-Term Memory
+- [ ] Connect FastAPI Backend
+- [ ] Build Frontend UI
+- [ ] Deploy to Production
 
-## 17. Performance Optimization
-- Index high-cardinality columns utilized in `WHERE` clauses.
-- Tune `work_mem` and `shared_buffers` based on the production instance size.
-- Utilize approximate nearest neighbor (ANN) indexes for pgvector to ensure low-latency similarity searches.
-
-## 18. References
-- [PostgreSQL Official Documentation](https://www.postgresql.org/docs/)
-- [pgvector GitHub Repository](https://github.com/pgvector/pgvector)
-- [Redis Official Documentation](https://redis.io/docs/)
-- [Neon Serverless Postgres](https://neon.tech/)
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
