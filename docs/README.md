@@ -80,31 +80,27 @@ The implementation of the database layer is broken down into the following order
 5. Cloud Deployment (Neon + Upstash)
 6. Observability & Monitoring Setup
 
-## 12. Folder Structure
-The documentation is organized as follows:
+## 12. Document Index
+Below is the cross-linked index of the documentation suite. As new documents are generated, this index is updated.
 
-```text
-docs/
-├── 01_Project_Overview.md
-├── 02_Database_Architecture.md
-├── 03_PostgreSQL.md
-├── 04_pgvector.md
-├── 05_Redis.md
-├── 06_Database_Schema.md
-├── 07_ER_Diagram.md
-├── 08_Memory_System.md
-├── 09_Memory_Agent.md
-├── 10_Embeddings.md
-├── 11_SQL_Guide.md
-├── 12_Docker_Database.md
-├── 13_Deployment.md
-├── 14_Backup_and_Recovery.md
-├── 15_Performance_Optimization.md
-├── 16_Monitoring.md
-├── 17_Terminal_Commands.md
-├── 18_Development_Setup.md
-└── README.md
-```
+- [01 - Project Overview](./01_Project_Overview.md)
+- [02 - Database Architecture](./02_Database_Architecture.md)
+- [03 - PostgreSQL Architecture](./03_PostgreSQL.md)
+- *04_pgvector.md (Pending)*
+- *05_Redis.md (Pending)*
+- *06_Database_Schema.md (Pending)*
+- *07_ER_Diagram.md (Pending)*
+- *08_Memory_System.md (Pending)*
+- *09_Memory_Agent.md (Pending)*
+- *10_Embeddings.md (Pending)*
+- *11_SQL_Guide.md (Pending)*
+- *12_Docker_Database.md (Pending)*
+- *13_Deployment.md (Pending)*
+- *14_Backup_and_Recovery.md (Pending)*
+- *15_Performance_Optimization.md (Pending)*
+- *16_Monitoring.md (Pending)*
+- *17_Terminal_Commands.md (Pending)*
+- *18_Development_Setup.md (Pending)*
 
 ## 13. SQL Examples
 ```sql
