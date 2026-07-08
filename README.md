@@ -87,6 +87,7 @@ Below is the cross-linked index of the documentation suite. As new documents are
 - [02 - Database Architecture](docs/02_Database_Architecture.md)
 - [03 - PostgreSQL Architecture](docs/03_PostgreSQL.md)
 - [04 - pgvector: Semantic Memory](docs/04_pgvector.md)
+- [05 - Neon Serverless PostgreSQL](docs/05_Neon_PostgreSQL.md)
 - [05 - Redis: Short-Term Memory](docs/05_Redis.md)
 - *06_Database_Schema.md (Pending)*
 - *07_ER_Diagram.md (Pending)*
