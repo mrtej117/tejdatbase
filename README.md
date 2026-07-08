@@ -94,10 +94,10 @@ Below is the cross-linked index of the documentation suite. As new documents are
 - [09 - Entity Relationship Diagram](docs/09_ER_Diagram.md)
 - [10 - SQL Guide](docs/10_SQL_Guide.md)
 - [11 - Embeddings](docs/11_Embeddings.md)
-- *12_Memory_System.md (Pending)*
-- *13_Memory_Agent.md (Pending)*
-- *14_Retrieval_Pipeline.md (Pending)*
-- *15_RAG_Pipeline.md (Pending)*
+- [12 - Memory System](docs/12_Memory_System.md)
+- [13 - Memory Agent](docs/13_Memory_Agent.md)
+- [14 - Retrieval Pipeline](docs/14_Retrieval_Pipeline.md)
+- [15 - RAG Pipeline](docs/15_RAG_Pipeline.md)
 - *16_Deployment.md (Pending)*
 - *17_Backup_and_Recovery.md (Pending)*
 - *18_Performance_Optimization.md (Pending)*
