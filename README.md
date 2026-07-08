@@ -98,8 +98,8 @@ Below is the cross-linked index of the documentation suite. As new documents are
 - [13 - Memory Agent](docs/13_Memory_Agent.md)
 - [14 - Retrieval Pipeline](docs/14_Retrieval_Pipeline.md)
 - [15 - RAG Pipeline](docs/15_RAG_Pipeline.md)
-- *16_Deployment.md (Pending)*
-- *17_Backup_and_Recovery.md (Pending)*
+- [16 - Deployment](docs/16_Deployment.md)
+- [17 - Backup and Recovery](docs/17_Backup_and_Recovery.md)
 - *18_Performance_Optimization.md (Pending)*
 - *19_Monitoring.md (Pending)*
 - *20_Development_Setup.md (Pending)*
