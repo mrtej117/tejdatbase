@@ -19,21 +19,22 @@ By placing `pgvector` directly inside PostgreSQL, the Semantic Brain lives along
 Below is the architecture of the Long-Term Semantic Memory pipeline.
 
 ```mermaid
-architecture-beta
-    group api_layer(cloud)[Application Services]
-    group db_layer(database)[Database Infrastructure]
+flowchart TD
+    subgraph api_layer [Application Services]
+        agent[Memory Agent]
+        embed_api((OpenAI Embeddings API))
+    end
 
-    service agent(server)[Memory Agent] in api_layer
-    service embed_api(cloud)[OpenAI Embeddings API] in api_layer
+    subgraph db_layer [Database Infrastructure]
+        pg[(PostgreSQL Server)]
+        vector_table[(Vector Tables\nLTM)]
+        index[(HNSW Index)]
+    end
 
-    service pg(database)[PostgreSQL Server] in db_layer
-    service vector_table(database)[Vector Tables\n(LTM)] in db_layer
-    service index(database)[HNSW Index] in db_layer
-
-    agent:B --> T:embed_api
-    agent:B --> T:pg
-    pg:B --> T:vector_table
-    vector_table:B --> T:index
+    agent -->|Extracts Context| embed_api
+    agent -->|Stores/Searches| pg
+    pg --> vector_table
+    vector_table --> index
 ```
 
 ## 6. Data Flow

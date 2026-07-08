@@ -22,20 +22,21 @@ To solve the problem statement, the system is engineered around a unified approa
 The architecture unifies structured and unstructured persistence, accessed by different application subsystems.
 
 ```mermaid
-architecture-beta
-    group api_layer(cloud)[Backend Services]
-    group db_layer(database)[Database Infrastructure]
+flowchart TD
+    subgraph api_layer [Backend Services]
+        backend[Backend API]
+        agent[Memory Agent]
+    end
 
-    service backend(server)[Backend API] in api_layer
-    service agent(server)[Memory Agent] in api_layer
+    subgraph db_layer [Database Infrastructure]
+        pg[(PostgreSQL Server\nRelational + pgvector)]
+        redis[(Redis Server\nCache + STM)]
+    end
 
-    service pg(database)[PostgreSQL Server\n(Relational + pgvector)] in db_layer
-    service redis(database)[Redis Server\n(Cache + STM)] in db_layer
-
-    backend:B --> T:pg
-    agent:B --> T:pg
-    agent:B --> T:redis
-    backend:R --> L:redis
+    backend -->|Reads/Writes| pg
+    agent -->|Semantic Search| pg
+    agent -->|Session State| redis
+    backend -.->|Rate Limits| redis
 ```
 
 ## 6. Data Flow

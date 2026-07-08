@@ -22,26 +22,28 @@ To mitigate these problems, our architecture utilizes **Connection Pooling** and
 Below is the detailed deployment architecture of the database layer.
 
 ```mermaid
-architecture-beta
-    group vpc(cloud)[Virtual Private Cloud]
-    
-    group app_subnet(server)[Application Subnet] in vpc
-    service backend(server)[Backend API (Node.js/Python)] in app_subnet
-    service agent(server)[Memory Agent (Python)] in app_subnet
+flowchart TD
+    subgraph vpc [Virtual Private Cloud]
+        subgraph app_subnet [Application Subnet]
+            backend[Backend API]
+            agent[Memory Agent]
+        end
 
-    group db_subnet(database)[Database Subnet (Private)] in vpc
-    service pooler(server)[PgBouncer\n(Connection Pooler)] in db_subnet
-    service postgres(database)[Neon PostgreSQL\n(Primary)] in db_subnet
-    service pgvector(database)[pgvector Extension] in db_subnet
-    service redis(database)[Upstash Redis\n(Primary)] in db_subnet
+        subgraph db_subnet [Database Subnet - Private]
+            pooler[PgBouncer\nConnection Pooler]
+            postgres[(Neon PostgreSQL\nPrimary)]
+            pgvector[(pgvector\nExtension)]
+            redis[(Upstash Redis\nPrimary)]
+        end
+    end
 
-    backend:B --> T:pooler
-    agent:B --> T:pooler
-    pooler:B --> T:postgres
-    postgres:B --> T:pgvector
+    backend -->|TCP| pooler
+    agent -->|TCP| pooler
+    pooler -->|TCP| postgres
+    postgres -->|Internal| pgvector
     
-    agent:R --> L:redis
-    backend:R --> L:redis
+    agent -->|TCP| redis
+    backend -.->|TCP| redis
 ```
 
 ## 6. Data Flow

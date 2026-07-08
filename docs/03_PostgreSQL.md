@@ -18,21 +18,22 @@ By using PostgreSQL as the primary data store, we solve the synchronization prob
 Below is the internal architecture of the PostgreSQL deployment, demonstrating how it processes the structured data that feeds the Memory Agent.
 
 ```mermaid
-architecture-beta
-    group pg_server(server)[PostgreSQL Server]
+flowchart TD
+    subgraph pg_server [PostgreSQL Server]
+        pooler[Connection Pooler]
+        memory[(Shared Buffers\nRAM)]
+        bg_writer[Background Writer]
+    end
     
-    service pooler(server)[Connection Pooler] in pg_server
-    service memory(database)[Shared Buffers\n(RAM)] in pg_server
-    service bg_writer(server)[Background Writer] in pg_server
-    
-    group storage(disk)[Persistent Storage]
-    service data_files(disk)[Data Files (Tables/Indexes)] in storage
-    service wal(disk)[WAL Logs] in storage
+    subgraph storage [Persistent Storage]
+        data_files[(Data Files\nTables/Indexes)]
+        wal[(WAL Logs)]
+    end
 
-    pooler:B --> T:memory
-    memory:B --> T:bg_writer
-    bg_writer:B --> T:data_files
-    pooler:R --> L:wal
+    pooler --> memory
+    memory --> bg_writer
+    bg_writer --> data_files
+    pooler -.->|Commits| wal
 ```
 
 ## 6. Data Flow
