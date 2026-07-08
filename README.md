@@ -90,18 +90,20 @@ Below is the cross-linked index of the documentation suite. As new documents are
 - [05 - Neon Serverless PostgreSQL](docs/05_Neon_PostgreSQL.md)
 - [06 - Redis: High-Performance Memory](docs/06_Redis.md)
 - [07 - Docker Database Infrastructure](docs/07_Docker_Database.md)
-- *08_Database_Schema.md (Pending)*
-- *09_ER_Diagram.md (Pending)*
+- [08 - Database Schema](docs/08_Database_Schema.md)
+- [09 - Entity Relationship Diagram](docs/09_ER_Diagram.md)
 - *10_SQL_Guide.md (Pending)*
 - *11_Embeddings.md (Pending)*
 - *12_Memory_System.md (Pending)*
 - *13_Memory_Agent.md (Pending)*
-- *14_Deployment.md (Pending)*
-- *15_Backup_and_Recovery.md (Pending)*
-- *16_Performance_Optimization.md (Pending)*
-- *17_Monitoring.md (Pending)*
-- *18_Development_Setup.md (Pending)*
-- *19_Terminal_Commands.md (Pending)*
+- *14_Retrieval_Pipeline.md (Pending)*
+- *15_RAG_Pipeline.md (Pending)*
+- *16_Deployment.md (Pending)*
+- *17_Backup_and_Recovery.md (Pending)*
+- *18_Performance_Optimization.md (Pending)*
+- *19_Monitoring.md (Pending)*
+- *20_Development_Setup.md (Pending)*
+- *21_Terminal_Commands.md (Pending)*
 
 ## 13. SQL Examples
 ```sql
