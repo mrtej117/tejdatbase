@@ -88,20 +88,20 @@ Below is the cross-linked index of the documentation suite. As new documents are
 - [03 - PostgreSQL Architecture](docs/03_PostgreSQL.md)
 - [04 - pgvector: Semantic Memory](docs/04_pgvector.md)
 - [05 - Neon Serverless PostgreSQL](docs/05_Neon_PostgreSQL.md)
-- [05 - Redis: Short-Term Memory](docs/05_Redis.md)
-- *06_Database_Schema.md (Pending)*
-- *07_ER_Diagram.md (Pending)*
-- *08_Memory_System.md (Pending)*
-- *09_Memory_Agent.md (Pending)*
-- *10_Embeddings.md (Pending)*
-- *11_SQL_Guide.md (Pending)*
-- *12_Docker_Database.md (Pending)*
-- *13_Deployment.md (Pending)*
-- *14_Backup_and_Recovery.md (Pending)*
-- *15_Performance_Optimization.md (Pending)*
-- *16_Monitoring.md (Pending)*
-- *17_Terminal_Commands.md (Pending)*
+- [06 - Redis: High-Performance Memory](docs/06_Redis.md)
+- *07_Docker_Database.md (Pending)*
+- *08_Database_Schema.md (Pending)*
+- *09_ER_Diagram.md (Pending)*
+- *10_SQL_Guide.md (Pending)*
+- *11_Embeddings.md (Pending)*
+- *12_Memory_System.md (Pending)*
+- *13_Memory_Agent.md (Pending)*
+- *14_Deployment.md (Pending)*
+- *15_Backup_and_Recovery.md (Pending)*
+- *16_Performance_Optimization.md (Pending)*
+- *17_Monitoring.md (Pending)*
 - *18_Development_Setup.md (Pending)*
+- *19_Terminal_Commands.md (Pending)*
 
 ## 13. SQL Examples
 ```sql
