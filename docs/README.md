@@ -86,7 +86,7 @@ Below is the cross-linked index of the documentation suite. As new documents are
 - [01 - Project Overview](./01_Project_Overview.md)
 - [02 - Database Architecture](./02_Database_Architecture.md)
 - [03 - PostgreSQL Architecture](./03_PostgreSQL.md)
-- *04_pgvector.md (Pending)*
+- [04 - pgvector: Semantic Memory](./04_pgvector.md)
 - *05_Redis.md (Pending)*
 - *06_Database_Schema.md (Pending)*
 - *07_ER_Diagram.md (Pending)*
