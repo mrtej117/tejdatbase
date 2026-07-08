@@ -100,8 +100,8 @@ Below is the cross-linked index of the documentation suite. As new documents are
 - [15 - RAG Pipeline](docs/15_RAG_Pipeline.md)
 - [16 - Deployment](docs/16_Deployment.md)
 - [17 - Backup and Recovery](docs/17_Backup_and_Recovery.md)
-- *18_Performance_Optimization.md (Pending)*
-- *19_Monitoring.md (Pending)*
+- [18 - Performance Optimization](docs/18_Performance_Optimization.md)
+- [19 - Monitoring](docs/19_Monitoring.md)
 - *20_Development_Setup.md (Pending)*
 - *21_Terminal_Commands.md (Pending)*
 
