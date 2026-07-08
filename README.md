@@ -92,8 +92,8 @@ Below is the cross-linked index of the documentation suite. As new documents are
 - [07 - Docker Database Infrastructure](docs/07_Docker_Database.md)
 - [08 - Database Schema](docs/08_Database_Schema.md)
 - [09 - Entity Relationship Diagram](docs/09_ER_Diagram.md)
-- *10_SQL_Guide.md (Pending)*
-- *11_Embeddings.md (Pending)*
+- [10 - SQL Guide](docs/10_SQL_Guide.md)
+- [11 - Embeddings](docs/11_Embeddings.md)
 - *12_Memory_System.md (Pending)*
 - *13_Memory_Agent.md (Pending)*
 - *14_Retrieval_Pipeline.md (Pending)*
