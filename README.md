@@ -89,7 +89,7 @@ Below is the cross-linked index of the documentation suite. As new documents are
 - [04 - pgvector: Semantic Memory](docs/04_pgvector.md)
 - [05 - Neon Serverless PostgreSQL](docs/05_Neon_PostgreSQL.md)
 - [06 - Redis: High-Performance Memory](docs/06_Redis.md)
-- *07_Docker_Database.md (Pending)*
+- [07 - Docker Database Infrastructure](docs/07_Docker_Database.md)
 - *08_Database_Schema.md (Pending)*
 - *09_ER_Diagram.md (Pending)*
 - *10_SQL_Guide.md (Pending)*
